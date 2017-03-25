@@ -27,15 +27,15 @@ public class TimeAgo {
         } else if (diff < 2 * MINUTE_MILLIS) {
             return "1m";
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " m";
+            return diff / MINUTE_MILLIS + "m";
         } else if (diff < 90 * MINUTE_MILLIS) {
             return "1h";
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " h";
+            return diff / HOUR_MILLIS + "h";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "1d";
         } else {
-            return diff / DAY_MILLIS + " d";
+            return diff / DAY_MILLIS + "d";
         }
     }
 }

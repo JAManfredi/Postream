@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.codepath.apps.postream.R;
 import com.jm.apps.postream.models.Tweet;
 import com.jm.apps.postream.models.User;
-import com.jm.apps.postream.utilities.CircleTransform;
+import com.jm.apps.postream.utilities.BorderedCircleTransform;
 import com.jm.apps.postream.utilities.TimeAgo;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,7 +92,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             e.printStackTrace();
         }
 
-        Picasso.with(getContext()).load(user.getProfileImageUrl()).fit().transform(new CircleTransform()).into(holder.ivUserImage);
+        holder.ivUserImage.setImageDrawable(null);
+        Glide.with(getContext())
+                .load(user.getProfileImageUrl())
+                .placeholder(R.drawable.image_placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new BorderedCircleTransform(getContext()))
+                .into(holder.ivUserImage);
     }
 
     @Override

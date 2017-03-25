@@ -12,8 +12,8 @@ import org.scribe.builder.api.TwitterApi;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
 	public static final String REST_URL = "https://api.twitter.com/1.1/";
-	public static final String REST_CONSUMER_KEY = "rtco4XaRk8rrHKZAiK02iUrjr";
-	public static final String REST_CONSUMER_SECRET = "SCbXuX1OBTNY708SaCaFIV3KcFMHqJeGexgfgG1cEhIjqfOaGx";
+	public static final String REST_CONSUMER_KEY = "XXXXX";
+	public static final String REST_CONSUMER_SECRET = "XXXXX";
 	public static final String REST_CALLBACK_URL = "oauth://postream";
 
 	public TwitterClient(Context context) {
@@ -29,4 +29,24 @@ public class TwitterClient extends OAuthBaseClient {
 
         client.get(apiUrl, params, handler);
     }
+
+    public void getTimeline(long sinceId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("since_id", sinceId);
+
+		client.get(apiUrl, params, handler);
+	}
+
+	public void getTimelineFromMax(long maxId, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("max_id", maxId - 1);
+
+		client.get(apiUrl, params, handler);
+	}
 }

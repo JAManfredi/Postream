@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/ivUserImage"
@@ -11,9 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_margin="10dp"
         app:srcCompat="@drawable/ic_launcher" />
 
     <TextView
@@ -21,9 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivUserImage"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
         android:layout_toRightOf="@+id/ivUserImage"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif"
         android:textStyle="bold"
         android:text="post stream" />
 
@@ -33,9 +32,17 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivUserImage"
         android:layout_marginLeft="3dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_toRightOf="@+id/tvUserName"
-        android:text="\@postream" />
+        android:layout_toEndOf="@+id/tvUserName"
+        android:layout_toLeftOf="@+id/tvTweetTime"
+        android:layout_toStartOf="@+id/tvTweetTime"
+        android:text="\@postream"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/colorDarkGray"
+        android:ellipsize="end"/>
 
     <TextView
         android:id="@+id/tvTweetTime"
@@ -44,8 +51,12 @@
         android:layout_alignBottom="@+id/tvUserName"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorDarkGray"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
         android:text="Now" />
 
     <TextView
@@ -54,9 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvUserName"
         android:layout_toRightOf="@+id/ivUserImage"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif"
         android:text="Tweet Text" />
 
 </RelativeLayout>

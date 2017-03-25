@@ -103,7 +103,7 @@ public class User extends BaseModel {
     }
 
     public String getProfileImageUrl() {
-        return profile_image_url;
+        return profile_image_url.replace("normal", "bigger");
     }
 
     public Boolean getFollowing() {
