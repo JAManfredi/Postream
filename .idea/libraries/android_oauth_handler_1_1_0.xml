@@ -1,10 +1,10 @@
 <component name="libraryTable">
   <library name="android-oauth-handler-1.1.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/eec6b545f904e640a44f04f3d2f72240e3ad3b38/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/eec6b545f904e640a44f04f3d2f72240e3ad3b38/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/eec6b545f904e640a44f04f3d2f72240e3ad3b38/output/jars/libs/codepath-utils.jar!/" />
-      <root url="jar://$USER_HOME$/.android/build-cache/eec6b545f904e640a44f04f3d2f72240e3ad3b38/output/jars/libs/scribe-codepath-0.0.3.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/e8c4cef261c808299410447e47d5b5e882f112fe/output/jars/libs/scribe-codepath-0.0.3.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/e8c4cef261c808299410447e47d5b5e882f112fe/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/e8c4cef261c808299410447e47d5b5e882f112fe/output/jars/libs/codepath-utils.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/e8c4cef261c808299410447e47d5b5e882f112fe/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
