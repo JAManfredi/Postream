@@ -12,8 +12,8 @@ import org.scribe.builder.api.TwitterApi;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
 	public static final String REST_URL = "https://api.twitter.com/1.1/";
-	public static final String REST_CONSUMER_KEY = "XXXXX";
-	public static final String REST_CONSUMER_SECRET = "XXXXX";
+	public static final String REST_CONSUMER_KEY = "rtco4XaRk8rrHKZAiK02iUrjr";
+	public static final String REST_CONSUMER_SECRET = "SCbXuX1OBTNY708SaCaFIV3KcFMHqJeGexgfgG1cEhIjqfOaGx";
 	public static final String REST_CALLBACK_URL = "oauth://postream";
 
 	public TwitterClient(Context context) {
@@ -48,5 +48,19 @@ public class TwitterClient extends OAuthBaseClient {
 		params.put("max_id", maxId - 1);
 
 		client.get(apiUrl, params, handler);
+	}
+
+	public void getCurrentUser(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		client.get(apiUrl, null, handler);
+	}
+
+	public void postStatus(String status, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+
+		RequestParams params = new RequestParams();
+		params.put("status", status);
+
+		client.post(apiUrl, params, handler);
 	}
 }

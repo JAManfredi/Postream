@@ -9,11 +9,15 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.parceler.Parcel;
 
+import java.sql.Date;
+
 /**
  * Created by Jared12 on 3/23/17.
  */
 
-@Table(database = PostreamDatabase.class)
+@Table(database = PostreamDatabase.class,
+        orderedCursorLookUp = true,
+        assignDefaultValuesFromCursor = false)
 @Parcel(analyze={Tweet.class})
 public class Tweet extends BaseModel {
 
@@ -22,7 +26,7 @@ public class Tweet extends BaseModel {
     Long id;
 
     @Column
-    String created_at;
+    Date created_at;
 
     @Column
     String text;
@@ -47,13 +51,17 @@ public class Tweet extends BaseModel {
 
     @Column
     @ForeignKey(saveForeignKeyModel = true)
+    Tweet retweeted_status;
+
+    @Column
+    @ForeignKey(saveForeignKeyModel = true)
     User user;
 
     public Long getId() {
         return id;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return created_at;
     }
 
@@ -89,12 +97,11 @@ public class Tweet extends BaseModel {
         return user;
     }
 
-//    // Record Finders
-//    public static SampleModel byId(long id) {
-//        return new Select().from(SampleModel.class).where(SampleModel_Table.id.eq(id)).querySingle();
-//    }
-//
-//    public static List<SampleModel> recentItems() {
-//        return new Select().from(SampleModel.class).orderBy(SampleModel_Table.id, false).limit(300).queryList();
-//    }
+    public Tweet getRetweetedStatus() {
+        return retweeted_status;
+    }
+
+    public Boolean isRetweet() {
+        return retweeted_status != null;
+    }
 }

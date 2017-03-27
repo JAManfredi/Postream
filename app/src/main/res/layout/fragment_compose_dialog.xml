@@ -1,0 +1,55 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/included_toolbar"
+            layout="@layout/toolbar_compose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/ivUserImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/included_toolbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="top"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/ivUserImage"
+            android:layout_toEndOf="@+id/ivUserImage"
+            android:layout_toLeftOf="@+id/tvCharsLeft"
+            android:layout_toStartOf="@+id/tvCharsLeft"
+            android:layout_below="@id/included_toolbar"
+            android:id="@+id/etNewPost"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/tvCharsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/included_toolbar"
+            android:textColor="@color/colorDarkGray"
+            android:text="140" />
+    </RelativeLayout>
+</layout>

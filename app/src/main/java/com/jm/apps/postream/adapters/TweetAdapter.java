@@ -1,32 +1,23 @@
 package com.jm.apps.postream.adapters;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.codepath.apps.postream.R;
+import com.codepath.apps.postream.databinding.ItemTweetBinding;
+import com.jm.apps.postream.viewModels.TweetViewModel;
 import com.jm.apps.postream.models.Tweet;
-import com.jm.apps.postream.models.User;
-import com.jm.apps.postream.utilities.BorderedCircleTransform;
-import com.jm.apps.postream.utilities.TimeAgo;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Jared12 on 3/23/17.
  */
 
-public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
+public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.BindingHolder> {
     private List<Tweet> mTweets;
     private Context mContext;
 
@@ -35,74 +26,66 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         mContext = context;
     }
 
-    private Context getContext() {
-        return mContext;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivUserImage;
-        public TextView tvUserName;
-        public TextView tvScreenName;
-        public TextView tvTweetTime;
-        public TextView tvTweetText;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ivUserImage = (ImageView) itemView.findViewById(R.id.ivUserImage);
-            tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
-            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
-            tvTweetTime = (TextView) itemView.findViewById(R.id.tvTweetTime);
-            tvTweetText = (TextView) itemView.findViewById(R.id.tvTweetText);
-        }
+    @Override
+    public TweetAdapter.BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ItemTweetBinding tweetBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.item_tweet,
+                parent,
+                false);
+        return new BindingHolder(tweetBinding);
     }
 
     @Override
-    public TweetAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
-        ViewHolder viewHolder = new ViewHolder(tweetView);
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(TweetAdapter.ViewHolder holder, int position) {
-        Tweet tweet = mTweets.get(position);
-        User user = tweet.getUser();
-        holder.tvUserName.setText(user.getName());
-        holder.tvTweetText.setText(tweet.getText());
-
-        String screenName = "@" + user.getScreenName();
-        holder.tvScreenName.setText(screenName);
-
-        Locale primaryLocale = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            primaryLocale = getContext().getResources().getConfiguration().getLocales().get(0);
-        } else {
-            primaryLocale = getContext().getResources().getConfiguration().locale;
-        }
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", primaryLocale);
-        try {
-            Date createdDate = sdf.parse(tweet.getCreatedAt());
-            long timeInMillis = createdDate.getTime();
-            String timeAgo = TimeAgo.getTimeAgo(timeInMillis);
-            holder.tvTweetTime.setText(timeAgo);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        holder.ivUserImage.setImageDrawable(null);
-        Glide.with(getContext())
-                .load(user.getProfileImageUrl())
-                .placeholder(R.drawable.image_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .transform(new BorderedCircleTransform(getContext()))
-                .into(holder.ivUserImage);
+    public void onBindViewHolder(TweetAdapter.BindingHolder holder, int position) {
+        ItemTweetBinding postBinding = holder.binding;
+        postBinding.setViewModel(new TweetViewModel(mContext, mTweets.get(position)));
     }
 
     @Override
     public int getItemCount() {
         return mTweets.size();
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        if (tweets == null
+                || tweets.size() == 0) {
+            return;
+        }
+        mTweets = tweets;
+        notifyDataSetChanged();
+    }
+
+    public void insertTweets(List<Tweet> tweets) {
+        if (tweets == null
+                || tweets.size() == 0) {
+            return;
+        }
+        mTweets.addAll(0, tweets);
+        notifyItemRangeInserted(0, tweets.size());
+    }
+
+    public void appendTweets(List<Tweet> tweets) {
+        if (tweets == null
+                || tweets.size() == 0) {
+            return;
+        }
+        int initialCount = mTweets.size();
+        mTweets.addAll(tweets);
+        notifyItemRangeInserted(initialCount + 1, tweets.size());
+    }
+
+    public void addTweet(Tweet tweet) {
+        mTweets.add(0, tweet);
+        notifyItemInserted(0);
+    }
+
+    public static class BindingHolder extends RecyclerView.ViewHolder {
+        private ItemTweetBinding binding;
+
+        public BindingHolder(ItemTweetBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
     }
 }

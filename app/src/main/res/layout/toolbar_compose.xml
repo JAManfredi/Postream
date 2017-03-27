@@ -1,0 +1,55 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme"
+        android:fitsSystemWindows="true">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btClose"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:background="@android:color/transparent"
+                android:text="Close"
+                android:textColor="@android:color/white"
+                android:layout_weight="0.13"
+                android:gravity="start|center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"/>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                style="@style/Toolbar.TitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="New Post" />
+
+            <Button
+                android:id="@+id/btPost"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:text="Post"
+                android:textColor="@android:color/white"
+                android:gravity="end|center_vertical"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+</layout>

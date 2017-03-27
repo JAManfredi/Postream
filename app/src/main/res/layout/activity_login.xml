@@ -9,15 +9,30 @@
     android:background="@color/colorPrimary"
     tools:context="com.jm.apps.postream.activities.LoginActivity" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btLogin">
+        <ImageView
+            android:id="@+id/postreamLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/postream_logo" />
+    </RelativeLayout>
+
     <Button
+        android:id="@+id/btLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/postreamLogo"
         android:layout_margin="20dp"
+        android:layout_centerInParent="true"
         android:onClick="loginToRest"
+        android:layout_marginTop="20dp"
         android:background="@android:color/white"
         android:fontFamily="sans-serif-light"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorDarkGray"
         android:text="@string/login_label" />
 
 </RelativeLayout>
