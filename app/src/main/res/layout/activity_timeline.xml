@@ -1,31 +1,12 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/main_content"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.jm.apps.postream.fragments.TweetsListFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
-                <include
-                    android:id="@+id/included_toolbar"
-                    layout="@layout/toolbar_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <android.support.v4.widget.SwipeRefreshLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/swipeContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvTweets"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                </android.support.v4.widget.SwipeRefreshLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 </layout>

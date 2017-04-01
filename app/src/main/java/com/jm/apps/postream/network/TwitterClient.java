@@ -30,6 +30,8 @@ public class TwitterClient extends OAuthBaseClient {
         client.get(apiUrl, params, handler);
     }
 
+    // Pull to refresh
+
     public void getTimeline(long sinceId, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");
 
@@ -39,6 +41,8 @@ public class TwitterClient extends OAuthBaseClient {
 
 		client.get(apiUrl, params, handler);
 	}
+
+	// Page down
 
 	public void getTimelineFromMax(long maxId, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/home_timeline.json");

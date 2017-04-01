@@ -82,8 +82,7 @@ public class ComposeDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_compose_dialog, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_compose_dialog, container, false);
         return binding.getRoot();
     }
 
