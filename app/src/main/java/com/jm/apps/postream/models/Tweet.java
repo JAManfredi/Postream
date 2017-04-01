@@ -23,7 +23,7 @@ public class Tweet extends BaseModel {
 
     @PrimaryKey
     @Column
-    Long id;
+    long id;
 
     @Column
     Date created_at;
@@ -57,7 +57,7 @@ public class Tweet extends BaseModel {
     @ForeignKey(saveForeignKeyModel = true)
     User user;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

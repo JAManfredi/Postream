@@ -19,7 +19,7 @@ public class User extends BaseModel {
 
     @PrimaryKey
     @Column
-    Long id;
+    long id;
 
     @Column
     String name;
@@ -58,7 +58,7 @@ public class User extends BaseModel {
     @Column
     Boolean following;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
