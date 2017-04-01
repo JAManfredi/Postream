@@ -15,7 +15,7 @@ package com.jm.apps.postream.viewModels;
 //    private TwitterClient mClient;
 //    private TweetAdapter mTweetAdapter;
 //    private EndlessRecyclerViewScrollListener mScrollListener;
-//    private ArrayList<Tweet> mTweets = new ArrayList<>();
+//    private ArrayList<Tweet> mTweets;
 //
 //    public TimelineActivityViewModel(ActivityTimelineBinding binding, Context context) {
 //        this.mBinding = binding;
@@ -37,6 +37,8 @@ package com.jm.apps.postream.viewModels;
 //
 //    private void setupRecyclerView() {
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+//
+//        mTweets = new ArrayList<>();
 //        mTweetAdapter = new TweetAdapter(mContext, mTweets);
 //
 //        RecyclerView rvTweets = mBinding.rvTweets;
@@ -93,7 +95,8 @@ package com.jm.apps.postream.viewModels;
 //    }
 //
 //    private void pullToRefresh() {
-//        if (mTweets == null || mTweets.size() == 0) {
+//        if (mTweets == null
+//                || mTweets.size() == 0) {
 //            return;
 //        }
 //
@@ -104,18 +107,20 @@ package com.jm.apps.postream.viewModels;
 //                List<Tweet> tweetList = mGson.fromJson(json.toString(), new TypeToken<List<Tweet>>(){}.getType());
 //                PostreamDatabaseHelper.saveListTweets(tweetList); // Save to db
 //                mTweetAdapter.insertTweets(tweetList);
+//                mBinding.swipeContainer.setRefreshing(false);
 //            }
 //
 //            @Override
 //            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 //                Log.e(TAG, errorResponse.toString());
+//                mBinding.swipeContainer.setRefreshing(false);
 //            }
 //        });
-//        mBinding.swipeContainer.setRefreshing(false);
 //    }
 //
 //    private void pageDown() {
-//        if (mTweets == null || mTweets.size() == 0) {
+//        if (mTweets == null
+//                || mTweets.size() == 0) {
 //            return;
 //        }
 //
@@ -152,6 +157,7 @@ package com.jm.apps.postream.viewModels;
 //                        Tweet tweet = mGson.fromJson(json.toString(), Tweet.class);
 //                        tweet.save(); // Save to db
 //                        mTweetAdapter.addTweet(tweet);
+//                        scrollToTop();
 //                    }
 //
 //                    @Override
@@ -161,5 +167,9 @@ package com.jm.apps.postream.viewModels;
 //                });
 //            }
 //        });
+//    }
+//
+//    public void scrollToTop() {
+//        mBinding.rvTweets.getLayoutManager().scrollToPosition(0);
 //    }
 //}

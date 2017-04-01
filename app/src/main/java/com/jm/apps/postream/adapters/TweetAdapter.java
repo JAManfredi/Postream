@@ -52,7 +52,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.BindingHolde
                 || tweets.size() == 0) {
             return;
         }
-        mTweets = tweets;
+        mTweets.addAll(tweets);
         notifyDataSetChanged();
     }
 
