@@ -1,5 +1,6 @@
 package com.jm.apps.postream.fragments;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,11 +27,8 @@ import com.jm.apps.postream.listeners.OnPostActionListener;
 import com.jm.apps.postream.models.User;
 import com.jm.apps.postream.network.TwitterClient;
 import com.jm.apps.postream.utilities.BorderedCircleTransform;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 public class ComposeDialogFragment extends DialogFragment {
     private static final String TAG = ComposeDialogFragment.class.getSimpleName();
@@ -75,7 +73,6 @@ public class ComposeDialogFragment extends DialogFragment {
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
         super.onResume();
     }
 
@@ -115,13 +112,14 @@ public class ComposeDialogFragment extends DialogFragment {
 
     private void loadUserImage() {
         TwitterClient client = PostreamApplication.getRestClient();
-        client.getCurrentUser(new JsonHttpResponseHandler() {
+        client.getCurrentUser(new TwitterClient.TwitterClientUserResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                final User currentUser = gson.fromJson(json.toString(), User.class);
-                if (currentUser != null) {
-                    Glide.with(getContext())
-                            .load(currentUser.getLargeProfileImageUrl())
+            public void onSuccess(User user) {
+                Context context = getContext();
+                if (user != null
+                        && context != null) {
+                    Glide.with(context)
+                            .load(user.getLargeProfileImageUrl())
                             .override(48, 48)
                             .placeholder(R.drawable.image_placeholder)
                             .transform(new BorderedCircleTransform(getContext()))
@@ -130,7 +128,7 @@ public class ComposeDialogFragment extends DialogFragment {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(JSONObject errorResponse) {
                 Log.e(TAG, errorResponse.toString());
             }
         });

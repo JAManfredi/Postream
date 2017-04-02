@@ -1,5 +1,6 @@
 package com.jm.apps.postream.activities;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,18 @@ import android.view.MenuItem;
 
 import com.codepath.apps.postream.R;
 import com.codepath.apps.postream.databinding.ActivityTimelineBinding;
-import com.jm.apps.postream.fragments.TweetsListFragment;
 import com.jm.apps.postream.models.Tweet;
+import com.jm.apps.postream.utilities.TweetPostResult;
+import com.jm.apps.postream.utilities.UserProfileRequestResult;
 import com.jm.apps.postream.viewModels.TimelineActivityViewModel;
 
-import java.util.List;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.parceler.Parcels;
 
 public class TimelineActivity extends AppCompatActivity {
     private TimelineActivityViewModel mViewModel;
-    private TweetsListFragment mFragmentTweetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,21 @@ public class TimelineActivity extends AppCompatActivity {
         setSupportActionBar(binding.includedToolbar.toolbar);
         setTitle("");
 
-        mFragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-        mViewModel = new TimelineActivityViewModel(this);
-        loadAllTweets();
+        mViewModel = new TimelineActivityViewModel(binding, this);
+        mViewModel.setupPagerAndTabs();
+        mViewModel.loadUserImage();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -42,36 +58,16 @@ public class TimelineActivity extends AppCompatActivity {
         mViewModel.newPost(new TimelineActivityViewModel.OnTweetPosted() {
             @Override
             public void onPosted(Tweet tweet) {
-                mFragmentTweetsList.insertTweet(tweet, true);
+                EventBus.getDefault().post(new TweetPostResult(tweet));
             }
         });
         return true;
     }
 
-    public void loadAllTweets() {
-        mViewModel.loadTimelineTweets(new TimelineActivityViewModel.OnTweetsLoadedCallback() {
-            @Override
-            public void onLoaded(List<Tweet> tweetsList) {
-                mFragmentTweetsList.setTweets(tweetsList);
-            }
-        });
-    }
-
-    public void loadTweetsSince(Tweet tweet) {
-        mViewModel.requestTweetsSince(tweet, new TimelineActivityViewModel.OnTweetsLoadedCallback() {
-            @Override
-            public void onLoaded(List<Tweet> tweetsList) {
-                mFragmentTweetsList.insertTweetsFront(tweetsList);
-            }
-        });
-    }
-
-    public void loadTweetsFrom(Tweet tweet) {
-        mViewModel.requestTweetsFrom(tweet, new TimelineActivityViewModel.OnTweetsLoadedCallback() {
-            @Override
-            public void onLoaded(List<Tweet> tweetsList) {
-                mFragmentTweetsList.insertTweetsEnd(tweetsList);
-            }
-        });
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showProfile(UserProfileRequestResult result) {
+        Intent profileIntent = new Intent(this, ProfileActivity.class);
+        profileIntent.putExtra("user", Parcels.wrap(result.getUser()));
+        startActivity(profileIntent);
     }
 }

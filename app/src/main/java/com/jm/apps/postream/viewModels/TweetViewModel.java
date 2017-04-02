@@ -12,6 +12,9 @@ import com.jm.apps.postream.models.Tweet;
 import com.jm.apps.postream.models.User;
 import com.jm.apps.postream.utilities.BorderedCircleTransform;
 import com.jm.apps.postream.utilities.TimeAgo;
+import com.jm.apps.postream.utilities.UserProfileRequestResult;
+
+import org.greenrobot.eventbus.EventBus;
 
 import static com.raizlabs.android.dbflow.config.FlowManager.getContext;
 
@@ -104,5 +107,9 @@ public class TweetViewModel extends BaseObservable {
                 .placeholder(R.drawable.image_placeholder)
                 .transform(new BorderedCircleTransform(getContext()))
                 .into(view);
+    }
+
+    public void onUserClick() {
+        EventBus.getDefault().post(new UserProfileRequestResult(mUser));
     }
 }

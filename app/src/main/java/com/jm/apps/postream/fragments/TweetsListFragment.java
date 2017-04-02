@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.postream.R;
 import com.codepath.apps.postream.databinding.FragmentTweetsListBinding;
-import com.jm.apps.postream.activities.TimelineActivity;
 import com.jm.apps.postream.models.Tweet;
 import com.jm.apps.postream.utilities.EndlessRecyclerViewScrollListener;
 import com.jm.apps.postream.viewModels.TweetsListViewModel;
@@ -24,7 +23,7 @@ import java.util.List;
  * Created by Jared12 on 3/30/17.
  */
 
-public class TweetsListFragment extends Fragment {
+public abstract class TweetsListFragment extends Fragment {
     private FragmentTweetsListBinding binding;
     private TweetsListViewModel mViewModel;
 
@@ -45,7 +44,7 @@ public class TweetsListFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Tweet tweet = mViewModel.getOldestTweet();
                 if (tweet != null) {
-                    ((TimelineActivity) getActivity()).loadTweetsFrom(tweet);
+                    loadTweetsFrom(tweet);
                 }
             }
         };
@@ -57,12 +56,13 @@ public class TweetsListFragment extends Fragment {
     }
 
     public void setupPullToRefreshListener() {
+
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Tweet tweet = mViewModel.getNewestTweet();
                 if (tweet != null) {
-                    ((TimelineActivity) getActivity()).loadTweetsSince(tweet);
+                    loadTweetsSince(tweet);
                 } else {
                     // Reset pull to refresh
                     insertTweetsFront(null);
@@ -86,4 +86,8 @@ public class TweetsListFragment extends Fragment {
     public void insertTweet(Tweet tweet, boolean scrollToTop) {
         mViewModel.insertTweet(tweet, scrollToTop);
     }
+
+    // Implement on subclass
+    public abstract void loadTweetsFrom(Tweet tweet);
+    public abstract void loadTweetsSince(Tweet tweet);
 }

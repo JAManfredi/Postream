@@ -1,9 +1,5 @@
 package com.jm.apps.postream.utilities;
 
-/**
- * Created by Jared12 on 3/25/17.
- */
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -16,15 +12,20 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.codepath.apps.postream.R;
 
-public class BorderedCircleTransform extends BitmapTransformation {
-    private int BORDER_COLOR = Color.DKGRAY;
-    private int BACKGROUND_COLOR = Color.WHITE;
+/**
+ * Created by Jared12 on 4/1/17.
+ */
 
+public class BorderedCircleTransformPC extends BitmapTransformation {
+
+    private int BORDER_COLOR = Color.DKGRAY;
+    private Context mContext;
     private final int BORDER_RADIUS = 1;
 
-    public BorderedCircleTransform(Context context) {
+    public BorderedCircleTransformPC(Context context) {
         super(context);
 
+        mContext = context;
         BORDER_COLOR = ContextCompat.getColor(context, R.color.colorDarkGray);
     }
 
@@ -51,8 +52,9 @@ public class BorderedCircleTransform extends BitmapTransformation {
         paintBg.setColor(BORDER_COLOR);
         paintBg.setAntiAlias(true);
 
-        canvas.drawColor(BACKGROUND_COLOR);
-        //ContextCompat.getColor(mContext, R.color.colorPrimary);
+        int primaryColor = ContextCompat.getColor(mContext, R.color.colorPrimary);
+        canvas.drawColor(primaryColor);
+
 
         // Draw the background circle
         canvas.drawCircle(r, r, r, paintBg);

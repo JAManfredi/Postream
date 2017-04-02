@@ -50,6 +50,9 @@ public class Tweet extends BaseModel {
     Boolean retweeted;
 
     @Column
+    Boolean is_mention;
+
+    @Column
     @ForeignKey(saveForeignKeyModel = true)
     Tweet retweeted_status;
 
@@ -103,5 +106,13 @@ public class Tweet extends BaseModel {
 
     public Boolean isRetweet() {
         return retweeted_status != null;
+    }
+
+    public Boolean getIsMention() {
+        return is_mention;
+    }
+
+    public void setIsMention(Boolean isMention) {
+        this.is_mention = isMention;
     }
 }
